@@ -1,4 +1,4 @@
-# 🎸 The Nehemizer (Portal Financeiro - Saavedra)
+# The Nehemizer (Portal Financeiro - Saavedra)
 
 > *“O peso justo e a organização perfeita para os seus contratos financeiros.”* (Inspirado em Provérbios 11:1 e na precisão administrativa de Neemias).
 
