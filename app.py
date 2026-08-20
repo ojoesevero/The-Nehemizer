@@ -61,7 +61,7 @@ def extrair_precos_pdf(arquivos_pdf):
     return pd.DataFrame(dados_precos)
 
 # --- INTERFACE ---
-st.title("🎸 The Nehemizer - Automação Inteligente Saavedra N3")
+st.title("The Nehemizer - Automação Inteligente Saavedra N3")
 st.markdown("*“O peso justo e a organização perfeita para os seus contratos financeiros.”*")
 
 col1, col2, col3 = st.columns(3)
