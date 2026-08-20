@@ -6,11 +6,14 @@
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.30+-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?style=for-the-badge&logo=pandas&logoColor=white)
+[![Streamlit App](https://img.shields.io/badge/🌐_Acesse_em_Produção-the--nehemizer.streamlit.app-FF4B4B?style=for-the-badge&logo=streamlit)](https://the-nehemizer.streamlit.app/)
 ![License](https://img.shields.io/badge/License-Proprietary-orange?style=for-the-badge)
 
 ---
 
 ## 📌 Visão Geral do Projeto
+
+> 🌐 **URL do Sistema em Produção:** [https://the-nehemizer.streamlit.app/](https://the-nehemizer.streamlit.app/)
 
 **The Nehemizer** é uma aplicação web desenvolvida em **Python + Streamlit** projetada para automatizar, equalizar e consolidar o fluxo de vendas e contratos financeiros de materiais hospitalares da **Saavedra N3**.
 

@@ -14,6 +14,7 @@
 | **Área Negocial** | Departamento Financeiro / Compras / Logística N3 |
 | **Linguagem / Framework** | Python 3.11+ / Streamlit |
 | **Status do Sistema** | 🟢 **Em Produção** |
+| **URL em Produção** | [https://the-nehemizer.streamlit.app/](https://the-nehemizer.streamlit.app/) |
 | **Desenvolvedor Principal** | Jonatan Severo |
 | **Unidade de Negócio** | Saavedra Suporte Web |
 | **E-mail de Suporte** | `suporte.saav@saavedra.com.br` |
