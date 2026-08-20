@@ -4,7 +4,41 @@ import io
 import numpy as np
 import pdfplumber
 
-st.set_page_config(page_title="The Nehemizer - Portal Financeiro Saavedra", page_icon="🎸", layout="wide")
+# --- CONFIGURAÇÃO DA PÁGINA ---
+st.set_page_config(
+    page_title="The Nehemizer - Portal Financeiro Saavedra",
+    page_icon="🎸",
+    layout="wide"
+)
+
+# --- ESTILIZAÇÃO CORPORATIVA SAAVEDRA (CSS CUSTOMIZADO) ---
+st.markdown("""
+    <style>
+        .main-title {
+            color: #F37021;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 0px;
+        }
+        .sub-title {
+            color: #475569;
+            font-size: 1.05rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+        .metric-card {
+            background-color: #F8FAFC;
+            border-left: 5px solid #F37021;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .stButton>button {
+            border-radius: 6px;
+            font-weight: bold;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
 # --- REGRAS E MAPEAMENTO ---
 CONTRATOS_MAPPING = {
@@ -20,6 +54,8 @@ CONTRATOS_MAPPING = {
 }
 
 def agrupar_cliente(texto, fallback=None):
+    if not texto or pd.isna(texto):
+        return fallback if fallback is not None else "OUTROS"
     r = str(texto).upper()
     if 'UNIMED' in r or '87096616' in r: return 'UNIMED'
     if 'CONCEICAO' in r or 'CONCEIÇÃO' in r: return 'CONCEICAO'
@@ -33,58 +69,93 @@ def agrupar_cliente(texto, fallback=None):
     if 'GHC' in r or '450166419' in r: return 'GHC'
     return fallback if fallback is not None else r.strip()
 
+@st.cache_data(show_spinner=False)
 def extrair_precos_pdf(arquivos_pdf):
     dados_precos = []
     for arquivo in arquivos_pdf:
-        with pdfplumber.open(arquivo) as pdf:
-            texto_pag1 = pdf.pages[0].extract_text().upper()
-            grupo_cliente = agrupar_cliente(texto_pag1, fallback="REVISAR")
-            for page in pdf.pages:
-                tabelas = page.extract_tables()
-                for tabela in tabelas:
-                    for linha in tabela:
-                        if not linha or len(linha) < 4: continue
-                        celulas = [str(c).strip() if c else "" for c in linha]
-                        ref_prod = celulas[0].replace('.', '').replace('-', '') 
-                        if ref_prod.isalnum() and len(ref_prod) >= 5:
-                            preco_str = next((c for c in celulas if "R$" in c), "")
-                            if preco_str:
-                                valor_limpo = preco_str.replace("R$", "").replace(".", "").replace(",", ".").strip()
-                                try:
-                                    dados_precos.append({
-                                        'GRUPO_CLIENTE': grupo_cliente,
-                                        'REFPROD': ref_prod,
-                                        'VALOR_TABELADO_BD': float(valor_limpo)
-                                    })
-                                except ValueError:
-                                    pass
+        try:
+            with pdfplumber.open(arquivo) as pdf:
+                if not pdf.pages:
+                    continue
+                primeira_pagina = pdf.pages[0].extract_text() or ""
+                texto_pag1 = primeira_pagina.upper()
+                grupo_cliente = agrupar_cliente(texto_pag1, fallback="REVISAR")
+                
+                for page in pdf.pages:
+                    tabelas = page.extract_tables()
+                    for tabela in tabelas:
+                        for linha in tabela:
+                            if not linha or len(linha) < 4: 
+                                continue
+                            celulas = [str(c).strip() if c else "" for c in linha]
+                            ref_prod = celulas[0].replace('.', '').replace('-', '') 
+                            if ref_prod.isalnum() and len(ref_prod) >= 5:
+                                preco_str = next((c for c in celulas if "R$" in c), "")
+                                if preco_str:
+                                    valor_limpo = preco_str.replace("R$", "").replace(".", "").replace(",", ".").strip()
+                                    try:
+                                        dados_precos.append({
+                                            'GRUPO_CLIENTE': grupo_cliente,
+                                            'REFPROD': ref_prod,
+                                            'VALOR_TABELADO_BD': float(valor_limpo)
+                                        })
+                                    except ValueError:
+                                        pass
+        except Exception as e:
+            st.warning(f"⚠️ Não foi possível processar o PDF {getattr(arquivo, 'name', 'desconhecido')}: {e}")
+            
     return pd.DataFrame(dados_precos)
 
-# --- INTERFACE ---
-st.title("The Nehemizer - Automação Inteligente Saavedra N3")
-st.markdown("*“O peso justo e a organização perfeita para os seus contratos financeiros.”*")
-
-col1, col2, col3 = st.columns(3)
-with col1:
-    arquivo_excel = st.file_uploader("1º Relatório de Vendas", type=['xlsx', 'xls', 'csv'])
-with col2:
-    arquivos_pdf = st.file_uploader("2º Contratos BD (PDFs)", type=['pdf'], accept_multiple_files=True)
-with col3:
-    arquivo_normal = st.file_uploader("3º Tabela Preços Normal", type=['xlsx', 'xls', 'csv'])
-
-if arquivo_excel:
-    with st.spinner('The Nehemizer está processando e equalizando os dados...'):
-        
-        # 1. LEITURA VENDAS
-        df_temp = pd.read_excel(arquivo_excel, nrows=20, header=None)
+def ler_arquivo_tabela(file):
+    filename = str(file.name).lower()
+    if filename.endswith('.csv'):
+        # Tenta diferentes separadores e encodings comuns em sistemas legados
+        for enc in ['utf-8', 'latin1', 'cp1252']:
+            for sep in [',', ';', '\t']:
+                try:
+                    file.seek(0)
+                    df_temp = pd.read_csv(file, nrows=20, header=None, encoding=enc, sep=sep)
+                    linha_cabecalho = 0
+                    for i, row in df_temp.iterrows():
+                        linha_texto = "".join(str(val).upper() for val in row.values)
+                        if "RAZAOSOCIAL" in linha_texto or "CONVENIO" in linha_texto or "REF" in linha_texto:
+                            linha_cabecalho = i
+                            break
+                    file.seek(0)
+                    return pd.read_csv(file, header=linha_cabecalho, encoding=enc, sep=sep)
+                except Exception:
+                    continue
+        file.seek(0)
+        return pd.read_csv(file)
+    else:
+        df_temp = pd.read_excel(file, nrows=20, header=None)
         linha_cabecalho = 0
         for i, row in df_temp.iterrows():
             linha_texto = "".join(str(val).upper() for val in row.values)
             if "RAZAOSOCIAL" in linha_texto or "CONVENIO" in linha_texto:
                 linha_cabecalho = i
                 break
-        df = pd.read_excel(arquivo_excel, header=linha_cabecalho)
-        df.columns = df.columns.str.upper().str.strip()
+        return pd.read_excel(file, header=linha_cabecalho)
+
+# --- CABEÇALHO DA INTERFACE ---
+st.markdown('<p class="main-title">🎸 The Nehemizer - Portal Financeiro Saavedra N3</p>', unsafe_allow_html=True)
+st.markdown('<p class="sub-title">“O peso justo e a organização perfeita para os seus contratos financeiros.” (Inspirado em Provérbios 11:1 e Neemias)</p>', unsafe_allow_html=True)
+
+# --- UPLOAD DE ARQUIVOS ---
+col1, col2, col3 = st.columns(3)
+with col1:
+    arquivo_excel = st.file_uploader("1º Relatório de Vendas (Excel / CSV)", type=['xlsx', 'xls', 'csv'])
+with col2:
+    arquivos_pdf = st.file_uploader("2º Contratos BD (PDFs)", type=['pdf'], accept_multiple_files=True)
+with col3:
+    arquivo_normal = st.file_uploader("3º Tabela Preços Normal (Excel / CSV)", type=['xlsx', 'xls', 'csv'])
+
+if arquivo_excel:
+    with st.spinner('The Nehemizer está processando e equalizando os dados...'):
+        
+        # 1. LEITURA VENDAS
+        df = ler_arquivo_tabela(arquivo_excel)
+        df.columns = df.columns.astype(str).str.upper().str.strip()
         
         novas_colunas = {}
         for col in df.columns:
@@ -98,9 +169,15 @@ if arquivo_excel:
         df = df.rename(columns=novas_colunas)  
         df = df.loc[:, ~df.columns.duplicated()]
         
+        # Garantia de existência de colunas vitais
+        if 'RAZAOSOCIAL' not in df.columns: df['RAZAOSOCIAL'] = 'DESCONHECIDO'
+        if 'REFPROD' not in df.columns: df['REFPROD'] = 'SEM_REF'
+        if 'QTDCOM' not in df.columns: df['QTDCOM'] = 1
+        if 'VLRTOTAL' not in df.columns: df['VLRTOTAL'] = 0.0
+        if 'DESCRICAO' not in df.columns: df['DESCRICAO'] = 'SEM DESCRICAO'
+        
         # Limpeza de códigos e CNPJs
-        if 'REFPROD' in df.columns:
-            df['REFPROD'] = df['REFPROD'].astype(str).str.replace(r'\.0$', '', regex=True)
+        df['REFPROD'] = df['REFPROD'].astype(str).str.replace(r'\.0$', '', regex=True)
         if 'CNPJPARCEIRO' in df.columns:
             df['CNPJPARCEIRO'] = df['CNPJPARCEIRO'].astype(str).str.replace(r'\D', '', regex=True)
         if 'CNPJPARCUSO' in df.columns:
@@ -121,7 +198,7 @@ if arquivo_excel:
             
         # 3. LEITURA TABELA NORMAL
         if arquivo_normal:
-            df_norm = pd.read_excel(arquivo_normal)
+            df_norm = ler_arquivo_tabela(arquivo_normal)
             norm_cols = {}
             for col in df_norm.columns:
                 c_up = str(col).upper().strip()
@@ -152,12 +229,30 @@ if arquivo_excel:
         # O preço final puxa da BD, se for vazio puxa do Upload Normal
         df['PRECO_COMPRA_FINAL'] = df['VALOR_TABELADO_BD'].fillna(df['PRECO_NORMAL'])
 
-    st.toast('Processamento concluído com sucesso!', icon='✅')
+    st.toast('Processamento e equalização concluídos!', icon='✅')
+    st.divider()
+
+    # --- PAINEL DE MÉTRICAS EXECUTIVAS (DASHBOARD KPI) ---
+    kpi1, kpi2, kpi3, kpi4 = st.columns(4)
+    total_linhas = len(df)
+    total_bd = df['TEM_PRECO_BD'].sum()
+    total_normal = total_linhas - total_bd
+    vlr_total_venda = df['VLRTOTAL'].sum()
+    
+    with kpi1:
+        st.metric("📦 Linhas de Vendas", f"{total_linhas:,}")
+    with kpi2:
+        st.metric("💼 Itens com Contrato BD", f"{total_bd:,}", delta=f"{ (total_bd/total_linhas*100) if total_linhas > 0 else 0:.1f}%")
+    with kpi3:
+        st.metric("⚠️ Itens na Aba NORMAL", f"{total_normal:,}", delta=f"-{(total_normal/total_linhas*100) if total_linhas > 0 else 0:.1f}%", delta_color="inverse")
+    with kpi4:
+        st.metric("💰 Total Vendas (R$)", f"R$ {vlr_total_venda:,.2f}")
+
     st.divider()
 
     # --- PRÉVIA EDITÁVEL ---
     st.subheader("👁️ Prévia do Relatório (Aba RESUMO)")
-    st.markdown("✏️ **Dica:** Dê um duplo-clique na coluna `PRECO_COMPRA_FINAL` para preencher valores em branco.")
+    st.markdown("✏️ **Dica:** Dê um duplo-clique na coluna `PRECO_COMPRA_FINAL` para preencher ou ajustar valores em branco antes de gerar a planilha final.")
 
     agg_dict = {
         'QTDCOM': 'sum',
@@ -194,6 +289,8 @@ if arquivo_excel:
         axis=1
     )
     
+    st.markdown("<br>", unsafe_allow_html=True)
+    
     # --- GERAÇÃO DO ARQUIVO PARA DOWNLOAD ---
     if st.button("GERAR RELATÓRIO FINAL 📥", type="primary"):
         output = io.BytesIO()
@@ -201,9 +298,9 @@ if arquivo_excel:
             workbook = writer.book
             
             formato_moeda = workbook.add_format({'num_format': 'R$ #,##0.00'})
-            formato_cabecalho = workbook.add_format({'bold': True, 'bg_color': '#F37021', 'font_color': 'white'}) # Laranja Saavedra
-            formato_subtotal = workbook.add_format({'bold': True})
-            formato_cabecalho_aba = workbook.add_format({'bold': True, 'bg_color': '#333333', 'font_color': 'white'})
+            formato_cabecalho = workbook.add_format({'bold': True, 'bg_color': '#F37021', 'font_color': 'white', 'border': 1}) # Laranja Saavedra
+            formato_subtotal = workbook.add_format({'bold': True, 'bg_color': '#F8FAFC'})
+            formato_cabecalho_aba = workbook.add_format({'bold': True, 'bg_color': '#333333', 'font_color': 'white', 'border': 1})
             
             # 1. ABA RESUMO
             df_resumo_export = df.groupby(['ABA_DESTINO', 'GRUPO_CLIENTE', 'REFPROD', 'DESCRICAO']).agg({
@@ -250,10 +347,10 @@ if arquivo_excel:
             
             df_excel_resumo.to_excel(writer, sheet_name='RESUMO', index=False)
             ws_resumo = writer.sheets['RESUMO']
-            ws_resumo.set_column('A:B', 15)
-            ws_resumo.set_column('C:E', 35)
-            ws_resumo.set_column('F:F', 10)
-            ws_resumo.set_column('G:J', 18, formato_moeda)
+            ws_resumo.set_column('A:B', 16)
+            ws_resumo.set_column('C:E', 38)
+            ws_resumo.set_column('F:F', 12)
+            ws_resumo.set_column('G:J', 20, formato_moeda)
             
             for col_num, value in enumerate(df_excel_resumo.columns.values):
                 ws_resumo.write(0, col_num, value, formato_cabecalho)
@@ -289,6 +386,9 @@ if arquivo_excel:
                 nome_sheet = str(aba)[:31].replace(':', '').replace('/', '')
                 df_excel_aba.to_excel(writer, sheet_name=nome_sheet, index=False)
                 ws_aba = writer.sheets[nome_sheet]
+                ws_aba.set_column('A:D', 15)
+                ws_aba.set_column('E:E', 35)
+                ws_aba.set_column('F:J', 18)
                 
                 for col_num, value in enumerate(df_excel_aba.columns.values):
                     ws_aba.write(0, col_num, value, formato_cabecalho_aba)
@@ -304,7 +404,7 @@ if arquivo_excel:
                 
                 total_geral = resumo_cli['VLRTOTAL'].sum()
                 ws_aba.write_row(start_r + len(resumo_cli), 0, ['TOTAL GERAL', '', '', '', total_geral], formato_subtotal)
-                ws_aba.set_column('D:E', 15, formato_moeda)
+                ws_aba.set_column('D:E', 18, formato_moeda)
 
         st.balloons()
         st.download_button(
