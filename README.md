@@ -176,8 +176,18 @@ Ao efetuar alterações e melhorias no projeto:
 
 ---
 
+## 👨‍💻 Autoria & Suporte Técnico
+
+Para dúvidas arquiteturais, solicitações de alterações ou suporte técnico nesta solução:
+
+- **Desenvolvedor Principal:** Jonatan Severo
+- 📧 **E-mail de Suporte:** [suporte.saav@saavedra.com.br](mailto:suporte.saav@saavedra.com.br)
+- 💼 **Perfil Profissional LinkedIn:** [linkedin.com/in/jonatanfsevero](https://www.linkedin.com/in/jonatanfsevero/)
+- 🏢 **Unidade de Negócio:** Saavedra Suporte Web
+
+---
+
 ## 📄 Licença e Propriedade
 
 Desenvolvido para uso exclusivo e corporativo da **Saavedra N3**.  
 Todos os direitos reservados.
->>>>>>> b718cef (docs & feat: adiciona README.md completo, documentacao Confluence e .gitignore)

@@ -14,7 +14,10 @@
 | **Área Negocial** | Departamento Financeiro / Compras / Logística N3 |
 | **Linguagem / Framework** | Python 3.11+ / Streamlit |
 | **Status do Sistema** | 🟢 **Em Produção** |
-| **Responsável Técnico** | Equipe de Desenvolvimento / TI Saavedra |
+| **Desenvolvedor Principal** | Jonatan Severo |
+| **Unidade de Negócio** | Saavedra Suporte Web |
+| **E-mail de Suporte** | `suporte.saav@saavedra.com.br` |
+| **Perfil LinkedIn** | [linkedin.com/in/jonatanfsevero](https://www.linkedin.com/in/jonatanfsevero/) |
 | **Última Atualização** | 20/08/2026 |
 
 ---
@@ -163,9 +166,11 @@ streamlit run app.py --server.port 8501 --server.address 0.0.0.0
 
 ---
 
-## 📞 8. PONTOS DE CONTATO E SUPORTE
+## 👨‍💻 8. INFORMAÇÕES DE AUTORIA & SUPORTE TÉCNICO
 
-| Função | Nome / Equipe | E-mail / Canal |
-| :--- | :--- | :--- |
-| **Sustentação de TI** | Suporte TI Saavedra | `suporte@saavedra.com.br` |
-| **Gestão de Contratos N3** | Departamento Financeiro | `financeiro@saavedra.com.br` |
+Para dúvidas arquiteturais, solicitações de alterações ou suporte técnico nesta solução:
+
+- **Desenvolvedor Principal:** Jonatan Severo
+- 📧 **E-mail de Suporte:** [suporte.saav@saavedra.com.br](mailto:suporte.saav@saavedra.com.br)
+- 💼 **Perfil Profissional LinkedIn:** [linkedin.com/in/jonatanfsevero](https://www.linkedin.com/in/jonatanfsevero/)
+- 🏢 **Unidade de Negócio:** Saavedra Suporte Web
