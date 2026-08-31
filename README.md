@@ -1,196 +1,355 @@
-# The Nehemizer - Portal Financeiro
+<!-- HEADER DO PROJETO -->
+<div align="center">
 
-> *“O peso justo e a organização perfeita para os seus contratos financeiros.”*  
-> *(Inspirado em Provérbios 11:1 e na gestão administrativa de Neemias).*
+  <h1>🎸 The Nehemizer</h1>
+  <p><strong>Portal Financeiro & Equalizador de Contratos Hospitalares Saavedra N3</strong></p>
 
-![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.30+-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-2.0+-150458?style=for-the-badge&logo=pandas&logoColor=white)
-[![Streamlit App](https://img.shields.io/badge/🌐_Acesse_em_Produção-the--nehemizer.streamlit.app-FF4B4B?style=for-the-badge&logo=streamlit)](https://the-nehemizer.streamlit.app/)
-![License](https://img.shields.io/badge/License-Proprietary-orange?style=for-the-badge)
+  <p>
+    <em>“O peso justo e a organização perfeita para os seus contratos financeiros.”</em><br>
+    <sub>(Inspirado em Provérbios 11:1 e na gestão administrativa de Neemias)</sub>
+  </p>
+
+  <p>
+    <a href="https://the-nehemizer.streamlit.app/">
+      <img src="https://img.shields.io/badge/🌐_Acesse_em_Produção-the--nehemizer.streamlit.app-F37021?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit App" />
+    </a>
+  </p>
+
+  <p>
+    <img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.11+" />
+    <img src="https://img.shields.io/badge/Streamlit-1.30+-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" alt="Streamlit" />
+    <img src="https://img.shields.io/badge/Pandas-2.0+-150458?style=flat-square&logo=pandas&logoColor=white" alt="Pandas" />
+    <img src="https://img.shields.io/badge/PDFPlumber-0.10+-2D3748?style=flat-square&logo=adobeacrobatreader&logoColor=white" alt="PDFPlumber" />
+    <img src="https://img.shields.io/badge/XlsxWriter-3.1+-217346?style=flat-square&logo=microsoftexcel&logoColor=white" alt="XlsxWriter" />
+    <img src="https://img.shields.io/badge/Ambiente-Docker_/_DevContainer-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
+    <img src="https://img.shields.io/badge/Licença-Corporativa_Saavedra-F37021?style=flat-square" alt="Licença" />
+  </p>
+
+</div>
+
+<hr />
+
+## 📌 Sumário Executivo
+
+<div align="justify">
+
+**The Nehemizer** é uma solução corporativa desenvolvida para a **Saavedra N3** com o objetivo de **automatizar, auditar e equalizar** a conciliação financeira de vendas e contratos de distribuição de materiais hospitalares (notadamente Becton Dickinson - BD).
+
+A ferramenta substitui processos manuais repetitivos ao realizar o cruzamento automatizado entre:
+1. **Relatórios Brutos de Vendas** (Excel / CSV com layouts dinâmicos);
+2. **Propostas e Contratos Vigentes BD** (extração estruturada via OCR/PDF Parsing);
+3. **Tabelas Padrão de Preços de Compra**.
+
+O resultado é um painel executivo com prévia interativa e geração instantânea de planilhas auditáveis `.xlsx` no padrão visual corporativo Saavedra.
+
+</div>
+
+<br />
 
 ---
 
-## 📌 Visão Geral do Projeto
+## ✨ Recursos & Diferenciais
 
-> 🌐 **URL do Sistema em Produção:** [https://the-nehemizer.streamlit.app/](https://the-nehemizer.streamlit.app/)
+<table width="100%">
+  <thead>
+    <tr>
+      <th width="30%" align="left">Recurso</th>
+      <th width="70%" align="left">Descrição e Benefício Operacional</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>📄 Leitura Inteligente de Vendas</strong></td>
+      <td>Detecção heurística automática da linha de cabeçalho e normalização flexível de colunas (<code>REFPROD</code>, <code>DESCRICAO</code>, <code>QTDCOM</code>, <code>VLRTOTAL</code>, <code>RAZAOSOCIAL</code>, <code>CONVENIO</code>), mesmo com variações de layout e <i>encodings</i> legados (UTF-8, Latin-1, CP1252).</td>
+    </tr>
+    <tr>
+      <td><strong>📑 Parser de PDFs (Contratos BD)</strong></td>
+      <td>Varredura direta com <code>pdfplumber</code> e <i>caching</i> inteligente para extrair produtos, códigos de referência e preços acordados (<code>VALOR_TABELADO_BD</code>) de propostas comerciais em PDF.</td>
+    </tr>
+    <tr>
+      <td><strong>⚖️ Regra Suprema de Contingência</strong></td>
+      <td>Classificação automatizada: produtos vinculados a contratos BD preservam seu valor de contrato e são direcionados às abas dos clientes; itens sem vínculo ou fora de contrato são transferidos para a aba <code>NORMAL</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>✏️ Prévia Interativa em Tempo Real</strong></td>
+      <td>Tabela interativa via <code>st.data_editor</code> que permite ao analista financeiro revisar, completar e ajustar preços em branco antes da exportação definitiva.</td>
+    </tr>
+    <tr>
+      <td><strong>📊 Exportação Contábil Multi-Aba</strong></td>
+      <td>Geração com <code>XlsxWriter</code> contendo <strong>Aba RESUMO</strong> (visão executiva consolidada por cliente com subtotais e margens) e <strong>Abas Analíticas por Cliente</strong> com formatação nativa <code>R$ #,##0.00</code>.</td>
+    </tr>
+  </tbody>
+</table>
 
-**The Nehemizer** é uma aplicação web desenvolvida em **Python + Streamlit** projetada para automatizar, equalizar e consolidar o fluxo de vendas e contratos financeiros de materiais hospitalares da **Saavedra N3**.
-
-A ferramenta elimina o trabalho manual repetitivo ao cruzar relatórios brutos de vendas (Excel/CSV), propostas e contratos vigentes da **Becton Dickinson (BD)** extraídos de arquivos PDF, e tabelas de preços padrão, gerando relatórios financeiros auditáveis no formato Microsoft Excel (`.xlsx`).
+<br />
 
 ---
 
-## ✨ Principais Funcionalidades
+## 🏛️ Fluxo e Arquitetura de Processamento
 
-- 📄 **Leitura Inteligente de Vendas:** Detecção automática da linha de cabeçalho em planilhas de vendas heterogêneas e padronização automática de nomes de colunas (`REFPROD`, `DESCRICAO`, `QTDCOM`, `VLRTOTAL`, `RAZAOSOCIAL`, `CONVENIO`).
-- 📑 **Parser Automático de PDFs (Contratos BD):** Varredura OCR/texto de propostas comerciais em PDF para extração dinâmica de produtos (`REFPROD`) e seus respetivos valores tabelados (`VALOR_TABELADO_BD`).
-- ⚖️ **Regra Suprema de Contingência:** Classificação automatizada onde produtos cadastrados em contrato BD mantêm seu valor tabelado e aba específica, enquanto produtos fora de contrato são direcionados de forma transparente para a aba `NORMAL`.
-- ✏️ **Prévia Editável em Tempo Real:** Interface web com tabela interativa (`st.data_editor`) que permite a revisão e complementação manual de preços pendentes antes da exportação final.
-- 📊 **Exportação Consolidada em Excel (XlsxWriter):**
-  - **Aba RESUMO:** Visão executiva agrupada por contrato/cliente com calculo de preço unitário de venda, valor total de venda, valor unitário de compra e valor total de compra, além de subtotais acumulados.
-  - **Abas Individuais por Cliente:** Detalhamento item a item das vendas por cliente/contrato + tabela resumo por produto com subtotal geral.
-  - **Estilização Corporativa:** Aplicação automática do padrão visual Saavedra (Laranja `#F37021` e Grafite `#333333`) com formatação monetária nativa `R$ #,##0.00`.
-
----
-
-## 🏛️ Arquitetura do Processamento
+<div align="center">
 
 ```mermaid
 flowchart TD
-    A[1º Relatório de Vendas .xlsx / .csv] --> D[Motor de Leitura & Higienização]
-    B[2º Contratos BD em PDF] --> E[Parser de PDF pdfplumber]
-    C[3º Tabela Preço Normal .xlsx / .csv] --> F[Leitura Tabela Padrão]
-    
-    E -->|RefProd + Valor BD| G[Cruzamento de Dados]
-    F -->|RefProd + Valor Normal| G
-    D -->|Vendas Padronizadas| G
-    
-    G --> H{Possui Preço BD?}
-    H -- Sim --> I[Aba Destino: GRUPO_CLIENTE]
-    H -- Não --> J[Aba Destino: NORMAL]
-    
-    I --> K[Preço Compra Final = Preço BD]
-    J --> L[Preço Compra Final = Preço Normal / Fallback]
-    
-    K --> M[Prévia Interativa Data Editor]
+    subgraph ENTRADA["📥 Entradas de Dados"]
+        A["1º Relatório de Vendas (.xlsx / .csv)"]
+        B["2º Contratos BD em PDF (.pdf)"]
+        C["3º Tabela Preço Normal (.xlsx / .csv)"]
+    end
+
+    subgraph PROCESSAMENTO["⚙️ Motor de Processamento & Regras"]
+        D["Leitura Heurística & Higienização"]
+        E["Parser de PDF (pdfplumber + Cache)"]
+        F["Normalização de Preços Padrão"]
+        G["Cruzamento de Chaves (RefProd + Razão Social)"]
+        H{"Possui Preço no Contrato BD?"}
+        I["Destino: Aba do Cliente\nPreço: Valor Contrato BD"]
+        J["Destino: Aba NORMAL\nPreço: Preço Normal / Fallback"]
+    end
+
+    subgraph INTERFACE["🖥️ Interface & Validação"]
+        K["Dashboard de KPIs Executivos"]
+        L["Prévia Editável (st.data_editor)"]
+    end
+
+    subgraph SAIDA["📦 Relatório Consolidado"]
+        M["XlsxWriter com Estilização Saavedra"]
+        N["Aba RESUMO (Consolidada + Subtotais)"]
+        O["Abas Analíticas Individuais"]
+    end
+
+    A --> D
+    B --> E
+    C --> F
+
+    D --> G
+    E --> G
+    F --> G
+
+    G --> H
+    H -- Sim --> I
+    H -- Não --> J
+
+    I --> K
+    J --> K
+    K --> L
     L --> M
-    
-    M -->|Edição Manual Se Necessário| N[Geração de Excel Consolidado]
-    N --> O[Planilha Final PROCESSADO_Relatorio_Final_TheNehemizer.xlsx]
+    M --> N
+    M --> O
 ```
+
+</div>
+
+<br />
 
 ---
 
-## 📋 Tabela de Mapeamento de Contratos & Clientes
+## 📋 Mapeamento de Contratos & Clientes Reconhecidos
 
-O sistema agrupa e identifica automaticamente parceiros e números de contratos cadastrados conforme a tabela abaixo:
+<div align="justify">
 
-| Cliente / Instituição | Termos Reconhecidos (Filtro) | Código do Contrato BD | Aba de Destino por Padrão |
-| :--- | :--- | :--- | :--- |
-| **UNIMED** | `UNIMED`, `87096616` | `450128261` | UNIMED |
-| **PUC** | `UNIAO BRASILEIRA`, `PUC`, `88630413` | `450155842` | PUC |
-| **H DIVINA** | `DIVINA`, `87317764` | `450146829` | H DIVINA |
-| **HCPA** | `CLINICAS`, `87020517` | `450139832` | HCPA |
-| **SMS POA** | `PORTO ALEGRE` + (`PREF`/`MUNICIPIO`/`92963560`) | `450120243` | SMS POA |
-| **EBSERH** | `EBSERH`, `SERVICOS HOSPITALARES`, `15126437` | `450098658` | EBSERH |
-| **HCAA** | `ASTROGILDO`, `95610887` | `450137626` | HCAA |
-| **GHC / CONCEIÇÃO** | `GHC`, `CONCEICAO`, `CONCEIÇÃO`, `450166419` | `450166419` | GHC / CONCEICAO |
-| **SANTA CASA** | `SANTA CASA` | *Consolidado* | SANTA CASA |
-| **OUTROS / SEM BD** | Produtos sem correspondência de preço BD | `NORMAL` | `NORMAL` |
+O sistema realiza a identificação automática de termos-chave e números de CNPJ na razão social para classificar os pedidos nos respectivos contratos:
+
+</div>
+
+<br />
+
+<table width="100%">
+  <thead>
+    <tr>
+      <th align="left">Cliente / Instituição</th>
+      <th align="left">Termos e CNPJs Reconhecidos</th>
+      <th align="center">Código Contrato BD</th>
+      <th align="center">Aba Padrão</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>UNIMED</strong></td>
+      <td><code>UNIMED</code>, <code>87096616</code></td>
+      <td align="center"><code>450128261</code></td>
+      <td align="center"><span style="background-color:#EBF8FF;color:#2B6CB0;padding:2px 8px;border-radius:4px;font-size:0.85em;font-weight:bold;">UNIMED</span></td>
+    </tr>
+    <tr>
+      <td><strong>PUC</strong></td>
+      <td><code>UNIAO BRASILEIRA</code>, <code>PUC</code>, <code>88630413</code></td>
+      <td align="center"><code>450155842</code></td>
+      <td align="center"><span style="background-color:#EBF8FF;color:#2B6CB0;padding:2px 8px;border-radius:4px;font-size:0.85em;font-weight:bold;">PUC</span></td>
+    </tr>
+    <tr>
+      <td><strong>H DIVINA</strong></td>
+      <td><code>DIVINA</code>, <code>87317764</code></td>
+      <td align="center"><code>450146829</code></td>
+      <td align="center"><span style="background-color:#EBF8FF;color:#2B6CB0;padding:2px 8px;border-radius:4px;font-size:0.85em;font-weight:bold;">H DIVINA</span></td>
+    </tr>
+    <tr>
+      <td><strong>HCPA</strong></td>
+      <td><code>CLINICAS</code>, <code>87020517</code></td>
+      <td align="center"><code>450139832</code></td>
+      <td align="center"><span style="background-color:#EBF8FF;color:#2B6CB0;padding:2px 8px;border-radius:4px;font-size:0.85em;font-weight:bold;">HCPA</span></td>
+    </tr>
+    <tr>
+      <td><strong>SMS POA</strong></td>
+      <td><code>PORTO ALEGRE</code> + (<code>PREF</code> / <code>MUNICIPIO</code> / <code>92963560</code>)</td>
+      <td align="center"><code>450120243</code></td>
+      <td align="center"><span style="background-color:#EBF8FF;color:#2B6CB0;padding:2px 8px;border-radius:4px;font-size:0.85em;font-weight:bold;">SMS POA</span></td>
+    </tr>
+    <tr>
+      <td><strong>EBSERH</strong></td>
+      <td><code>EBSERH</code>, <code>SERVICOS HOSPITALARES</code>, <code>15126437</code></td>
+      <td align="center"><code>450098658</code></td>
+      <td align="center"><span style="background-color:#EBF8FF;color:#2B6CB0;padding:2px 8px;border-radius:4px;font-size:0.85em;font-weight:bold;">EBSERH</span></td>
+    </tr>
+    <tr>
+      <td><strong>HCAA</strong></td>
+      <td><code>ASTROGILDO</code>, <code>95610887</code></td>
+      <td align="center"><code>450137626</code></td>
+      <td align="center"><span style="background-color:#EBF8FF;color:#2B6CB0;padding:2px 8px;border-radius:4px;font-size:0.85em;font-weight:bold;">HCAA</span></td>
+    </tr>
+    <tr>
+      <td><strong>GHC / CONCEIÇÃO</strong></td>
+      <td><code>GHC</code>, <code>CONCEICAO</code>, <code>CONCEIÇÃO</code>, <code>450166419</code></td>
+      <td align="center"><code>450166419</code></td>
+      <td align="center"><span style="background-color:#EBF8FF;color:#2B6CB0;padding:2px 8px;border-radius:4px;font-size:0.85em;font-weight:bold;">CONCEICAO</span></td>
+    </tr>
+    <tr>
+      <td><strong>SANTA CASA</strong></td>
+      <td><code>SANTA CASA</code></td>
+      <td align="center"><em>Sob Consulta</em></td>
+      <td align="center"><span style="background-color:#EBF8FF;color:#2B6CB0;padding:2px 8px;border-radius:4px;font-size:0.85em;font-weight:bold;">SANTA CASA</span></td>
+    </tr>
+    <tr>
+      <td><strong>FORA DE CONTRATO / OUTROS</strong></td>
+      <td>Produtos sem correspondência de preço tabelado BD</td>
+      <td align="center"><code>NORMAL</code></td>
+      <td align="center"><span style="background-color:#FFF5F5;color:#C53030;padding:2px 8px;border-radius:4px;font-size:0.85em;font-weight:bold;">NORMAL</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
-- **Linguagem:** [Python 3.11+](https://www.python.org/)
-- **Interface Web:** [Streamlit](https://streamlit.io/)
-- **Manipulação de Dados:** [Pandas](https://pandas.pydata.org/) & [NumPy](https://numpy.org/)
-- **Leitura de PDFs:** [pdfplumber](https://github.com/jsvine/pdfplumber)
-- **Geração e Formatação de Excel:** [XlsxWriter](https://xlsxwriter.readthedocs.io/) & [OpenPyXL](https://openpyxl.readthedocs.io/)
+## 🚀 Como Executar Localmente
+
+<details open>
+<summary><strong>💻 Execução no Ambiente Local (Python)</strong></summary>
+
+<br />
+
+1. **Clonar o Repositório:**
+   ```bash
+   git clone https://github.com/seu-usuario/The-Nehemizer.git
+   cd The-Nehemizer
+   ```
+
+2. **Criar e Ativar Ambiente Virtual:**
+   - **Windows (PowerShell):**
+     ```powershell
+     python -m venv .venv
+     .\.venv\Scripts\Activate.ps1
+     ```
+   - **Linux / macOS:**
+     ```bash
+     python3 -m venv .venv
+     source .venv/bin/activate
+     ```
+
+3. **Instalar Dependências:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Iniciar o Streamlit:**
+   ```bash
+   streamlit run app.py
+   ```
+   Acesse a aplicação no navegador em: `http://localhost:8501`.
+
+</details>
+
+<details>
+<summary><strong>🐳 Execução via Docker / VS Code DevContainers</strong></summary>
+
+<br />
+
+Este repositório está pré-configurado com **DevContainers**:
+1. Abra a pasta do projeto no VS Code;
+2. Pressione `F1` e selecione **"Dev Containers: Reopen in Container"**;
+3. O contêiner configurará o ambiente com Python 3.11 e instalará as dependências automaticamente na porta `8501`.
+
+</details>
+
+<br />
 
 ---
 
-## 💻 Como Executar o Projeto
+## 📂 Estrutura do Repositório
 
-### Pré-requisitos
-- Python 3.10 ou superior instalado.
-- Gerenciador de pacotes `pip`.
-
-### 1. Clonar o Repositório
-```bash
-git clone https://github.com/seu-usuario/The-Nehemizer.git
-cd The-Nehemizer
-```
-
-### 2. Criar e Ativar Ambiente Virtual (Recomendado)
-- **Windows (PowerShell):**
-  ```powershell
-  python -m venv .venv
-  \.venv\Scripts\Activate.ps1
-  ```
-- **Linux / macOS:**
-  ```bash
-  python3 -m venv .venv
-  source .venv/bin/activate
-  ```
-
-### 3. Instalar Dependências
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Executar a Aplicação
-```bash
-streamlit run app.py
-```
-A aplicação abrirá automaticamente no seu navegador em `http://localhost:8501`.
-
----
-
-## 🐳 Execução via VS Code DevContainer / Codespaces
-
-Este repositório possui suporte nativo ao **VS Code DevContainers** e **GitHub Codespaces**.
-
-1. Certifique-se de ter o Docker e a extensão *Dev Containers* instalados no VS Code.
-2. Abra a pasta do projeto no VS Code e selecione **"Reopen in Container"**.
-3. O ambiente instalará as dependências automaticamente e iniciará a aplicação na porta `8501`.
-
----
-
-## 📂 Estrutura de Arquivos
-
-```
+```text
 The-Nehemizer/
 │
 ├── .devcontainer/
-│   └── devcontainer.json   # Configuração para desenvolvimento em contêineres
+│   └── devcontainer.json    # Configuração de ambiente conteinerizado
 ├── .vscode/
-│   └── settings.json       # Configurações do VS Code
-├── .gitignore              # Regras de exclusão de arquivos temporários e caches
-├── app.py                  # Código fonte principal (Interface + Regras de Negócio)
-├── CONFLUENCE.md           # Documentação corporativa formatada para Confluence
-├── README.md               # Documentação técnica e guia do desenvolvedor
-└── requirements.txt        # Lista de dependências Python
+│   └── settings.json        # Preferências e workspace settings
+├── .gitignore               # Regras de exclusão do controle de versão
+├── app.py                   # Núcleo da aplicação (Streamlit + Regras de Negócio)
+├── CONFLUENCE.md            # Documentação técnica e operacional para Confluence
+├── README.md                # Guia do projeto e documentação para desenvolvedores
+└── requirements.txt         # Especificação de dependências Python
 ```
 
----
-
-## 🤝 Guia de Contribuição e Git Workflow
-
-Ao efetuar alterações e melhorias no projeto:
-
-1. **Atualizar a branch local:**
-   ```bash
-   git pull origin main
-   ```
-2. **Criar uma branch de feature/hotfix:**
-   ```bash
-   git checkout -b feature/nova-funcionalidade
-   ```
-3. **Fazer o commit com mensagens claras:**
-   ```bash
-   git add .
-   git commit -m "feat: adiciona suporte a novos contratos BD"
-   ```
-4. **Enviar para o repositório remoto:**
-   ```bash
-   git push origin feature/nova-funcionalidade
-   ```
+<br />
 
 ---
 
-## 👨‍💻 Autoria & Suporte Técnico
+## 🤝 Guia de Contribuição & Padrão Git
 
-Para dúvidas arquiteturais, solicitações de alterações ou suporte técnico nesta solução:
+Para propor melhorias ou correções:
 
-- **Desenvolvedor Principal:** Jonatan Severo
-- 📧 **E-mail de Suporte:** [suporte.saav@saavedra.com.br](mailto:suporte.saav@saavedra.com.br)
-- 💼 **Perfil Profissional LinkedIn:** [linkedin.com/in/jonatanfsevero](https://www.linkedin.com/in/jonatanfsevero/)
-- 🏢 **Unidade de Negócio:** Saavedra Suporte Web
+1. Garanta que sua branch local está atualizada:
+   ```bash
+   git checkout main && git pull origin main
+   ```
+2. Crie uma branch nomeada para sua feature/fix:
+   ```bash
+   git checkout -b feature/suporte-novo-contrato
+   ```
+3. Realize commits semânticos:
+   ```bash
+   git commit -m "feat(parser): adiciona suporte ao contrato Hospital Mãe de Deus"
+   ```
+4. Submeta seu Pull Request para revisão.
+
+<br />
 
 ---
 
-## 📄 Licença e Propriedade
+## 👨‍💻 Autoria & Suporte Corporativo
 
-Desenvolvido para uso exclusivo e corporativo da **Saavedra N3**.  
-Todos os direitos reservados.
+<div align="center">
+
+<table width="80%">
+  <tbody>
+    <tr>
+      <td width="30%" align="center">
+        <img src="https://img.shields.io/badge/SAAVEDRA-N3_Portal-F37021?style=for-the-badge&logo=shield&logoColor=white" alt="Saavedra N3" /><br><br>
+        <strong>Saavedra Suporte Web</strong>
+      </td>
+      <td width="70%" align="left">
+        <strong>Desenvolvedor Principal:</strong> Jonatan Severo<br>
+        📧 <strong>E-mail:</strong> <a href="mailto:suporte.saav@saavedra.com.br">suporte.saav@saavedra.com.br</a><br>
+        💼 <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/jonatanfsevero/" target="_blank">linkedin.com/in/jonatanfsevero</a><br>
+        🏢 <strong>Organização:</strong> Saavedra Representações e Distribuição
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+
+<sub>Desenvolvido com excelência para uso corporativo exclusivo da <strong>Saavedra N3</strong>. Todos os direitos reservados.</sub>
+
+</div>
