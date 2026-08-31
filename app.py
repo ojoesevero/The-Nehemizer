@@ -11,7 +11,7 @@ from src.services.table_service import ler_arquivo_tabela
 from src.services.pdf_service import extrair_precos_pdf
 from src.services.business_rules import normalizar_colunas_vendas, aplicar_regra_suprema
 from src.services.excel_exporter import gerar_planilha_consolidada
-from src.utils.ui_components import render_header, render_guia_inicial, render_kpis_e_graficos
+from src.utils.ui_components import render_header, render_guia_inicial, render_kpis_e_graficos, render_sidebar_help
 
 # --- CONFIGURAÇÃO DA PÁGINA ---
 st.set_page_config(
@@ -20,8 +20,9 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- CABEÇALHO & ESTILOS ---
+# --- CABEÇALHO, ESTILOS & MENU LATERAL DE AJUDA ---
 render_header()
+render_sidebar_help()
 
 # --- SESSÃO & PERSISTÊNCIA ---
 if 'df_processado' not in st.session_state:

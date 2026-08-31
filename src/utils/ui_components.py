@@ -2,7 +2,10 @@
 
 import streamlit as st
 import pandas as pd
-from src.config.settings import APP_TITLE, APP_SUBTITLE, APP_VERSION, APP_ICON, CUSTOM_CSS, PRIMARY_COLOR, DARK_NEUTRAL
+from src.config.settings import (
+    APP_TITLE, APP_SUBTITLE, APP_VERSION, APP_ICON, CUSTOM_CSS, 
+    PRIMARY_COLOR, DARK_NEUTRAL, CONTRATOS_MAPPING
+)
 from src.services.table_service import gerar_template_exemplo_vendas
 
 
@@ -14,6 +17,56 @@ def render_header():
         unsafe_allow_html=True
     )
     st.markdown(f'<p class="sub-title">{APP_SUBTITLE}</p>', unsafe_allow_html=True)
+
+
+def render_sidebar_help():
+    """Renderiza o menu lateral de ajuda com instruções completas de uso do sistema."""
+    with st.sidebar:
+        st.markdown(f"### 📖 Central de Ajuda")
+        st.markdown(f"**The Nehemizer** `v{APP_VERSION}`")
+        st.divider()
+        
+        with st.expander("🚀 Como Usar (Passo a Passo)", expanded=True):
+            st.markdown("""
+            1. **Anexe o Relatório de Vendas** (`.xlsx`, `.xls` ou `.csv`).
+            2. **Anexe os Contratos BD em PDF** (propostas comerciais com preços tabelados).
+            3. *(Opcional)* **Anexe a Tabela Normal** de preços de compra.
+            4. O sistema equaliza e cruza as informações automaticamente.
+            5. **Revise a Prévia**: se houver itens com preço de compra em branco, dê duplo-clique para preencher.
+            6. Clique em **GERAR RELATÓRIO FINAL** para baixar a planilha consolidada.
+            """)
+
+        with st.expander("⚖️ Regra de Contingência (BD vs NORMAL)"):
+            st.markdown("""
+            * **Itens com Contrato BD:** Se a referência do produto constar no contrato do cliente (PDF), o item vai para a aba específica da instituição com o valor tabelado.
+            * **Itens fora de Contrato:** Produtos sem correspondência de preço BD são direcionados automaticamente para a aba **`NORMAL`**.
+            """)
+
+        with st.expander("🏢 Contratos & Clientes Mapeados"):
+            for cli, num in CONTRATOS_MAPPING.items():
+                st.markdown(f"• **{cli}**: Contrato `{num}`")
+
+        with st.expander("📥 Baixar Planilha Modelo"):
+            st.markdown("Baixe um modelo pronto para testar o processamento:")
+            template_bytes = gerar_template_exemplo_vendas()
+            st.download_button(
+                label="📄 Download Template (.xlsx)",
+                data=template_bytes,
+                file_name="Template_Vendas_TheNehemizer_Exemplo.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                use_container_width=True,
+                key="sidebar_download_template"
+            )
+
+        with st.expander("👨‍💻 Suporte Corporativo"):
+            st.markdown("""
+            * **Unidade:** Saavedra Suporte Web
+            * **Desenvolvedor:** Jonatan Severo
+            * **E-mail:** `suporte.saav@saavedra.com.br`
+            """)
+
+        st.divider()
+        st.caption("© Saavedra. Todos os direitos reservados.")
 
 
 def render_guia_inicial():
