@@ -26,7 +26,7 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 
 ### 🔄 Alterado
 - **Refatoração do `app.py`:** Redução de complexidade, servindo como orquestrador principal e delegando regras aos módulos especializados.
-- **Melhorias Visuais no README:** Estruturação semântica com HTML5, badges interativas e tabelas estilizadas com padrão Saavedra N3.
+- **Melhorias Visuais no README:** Estruturação semântica com HTML5, badges interativas e tabelas estilizadas com padrão Saavedra.
 
 ---
 

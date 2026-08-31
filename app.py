@@ -1,4 +1,4 @@
-"""The Nehemizer - Portal Financeiro Saavedra N3
+"""The Nehemizer - Portal Financeiro Saavedra
 Orquestrador da aplicação web Streamlit.
 """
 

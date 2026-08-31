@@ -2,7 +2,7 @@
 <div align="center">
 
   <h1>The Nehemizer</h1>
-  <p><strong>Portal Financeiro & Equalizador de Contratos Hospitalares Saavedra N3</strong></p>
+  <p><strong>Portal Financeiro & Equalizador de Contratos Hospitalares Saavedra</strong></p>
 
   <p>
     <em>“Equalização, auditoria e consolidação precisa para contratos financeiros e materiais hospitalares.”</em>
@@ -35,7 +35,7 @@
 
 <div align="justify">
 
-**The Nehemizer** é uma solução corporativa desenvolvida para a **Saavedra N3** com o objetivo de **automatizar, auditar e equalizar** a conciliação financeira de vendas e contratos de distribuição de materiais hospitalares (notadamente Becton Dickinson - BD).
+**The Nehemizer** é uma solução corporativa desenvolvida para a **Saavedra** com o objetivo de **automatizar, auditar e equalizar** a conciliação financeira de vendas e contratos de distribuição de materiais hospitalares (notadamente Becton Dickinson - BD).
 
 A ferramenta substitui processos manuais repetitivos ao realizar o cruzamento automatizado entre:
 1. **Relatórios Brutos de Vendas** (Excel / CSV com layouts dinâmicos);
@@ -347,7 +347,7 @@ Para propor melhorias ou correções:
   <tbody>
     <tr>
       <td width="30%" align="center">
-        <img src="https://img.shields.io/badge/SAAVEDRA-N3_Portal-F37021?style=for-the-badge&logo=shield&logoColor=white" alt="Saavedra N3" /><br><br>
+        <img src="https://img.shields.io/badge/SAAVEDRA-Portal-DC4405?style=for-the-badge&logo=shield&logoColor=white" alt="Saavedra" /><br><br>
         <strong>Saavedra Suporte Web</strong>
       </td>
       <td width="70%" align="left">
@@ -362,6 +362,6 @@ Para propor melhorias ou correções:
 
 <br>
 
-<sub>Desenvolvido com excelência para uso corporativo exclusivo da <strong>Saavedra N3</strong>. Todos os direitos reservados.</sub>
+<sub>Desenvolvido com excelência para uso corporativo exclusivo da <strong>Saavedra</strong>. Todos os direitos reservados.</sub>
 
 </div>

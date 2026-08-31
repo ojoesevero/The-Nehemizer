@@ -1,4 +1,4 @@
-# 📑 DOCUMENTAÇÃO TÉCNICA E OPERACIONAL — THE NEHEMIZER (SAAVEDRA N3)
+# 📑 DOCUMENTAÇÃO TÉCNICA E OPERACIONAL — THE NEHEMIZER (SAAVEDRA)
 
 > **Observação:** Esta documentação foi formatada para ser copiada e colada diretamente no **Confluence** ou exportada como base de conhecimento da empresa.
 
@@ -9,9 +9,9 @@
 | Atributo | Detalhe |
 | :--- | :--- |
 | **Nome do Sistema** | The Nehemizer — Portal Financeiro Saavedra |
-| **Código do Projeto** | `SAAV-N3-NEHEMIZER` |
-| **Versão Atual** | `1.0.0` |
-| **Área Negocial** | Departamento Financeiro / Compras / Logística N3 |
+| **Código do Projeto** | `SAAV-NEHEMIZER` |
+| **Versão Atual** | `1.2.0` |
+| **Área Negocial** | Departamento Financeiro / Compras / Logística |
 | **Linguagem / Framework** | Python 3.11+ / Streamlit |
 | **Status do Sistema** | 🟢 **Em Produção** |
 | **URL em Produção** | [https://the-nehemizer.streamlit.app/](https://the-nehemizer.streamlit.app/) |
@@ -19,14 +19,14 @@
 | **Unidade de Negócio** | Saavedra Suporte Web |
 | **E-mail de Suporte** | `suporte.saav@saavedra.com.br` |
 | **Perfil LinkedIn** | [linkedin.com/in/jonatanfsevero](https://www.linkedin.com/in/jonatanfsevero/) |
-| **Última Atualização** | 20/08/2026 |
+| **Última Atualização** | 31/08/2026 |
 
 ---
 
 ## 🎯 2. Visão Geral e Objetivo Negocial
 
 ### 2.1 Contexto
-Aoperação comercial da **Saavedra N3** envolve a comercialização de suprimentos e dispositivos hospitalares sob contratos de fornecimento público e privado (ex.: Becton Dickinson - BD, Unimed, HCPA, EBSERH, PUC, GHC, etc.). 
+A operação comercial da **Saavedra** envolve a comercialização de suprimentos e dispositivos hospitalares sob contratos de fornecimento público e privado (ex.: Becton Dickinson - BD, Unimed, HCPA, EBSERH, PUC, GHC, etc.). 
 
 Anteriormente, o processo de consolidação de relatórios de vendas, verificação de preços tabelados em propostas comerciais em PDF e segregação de vendas fora de contrato dependia de digitação e cruzamento manual em planilhas Excel, demandando horas de trabalho e gerando riscos de inconsistência financeira.
 
