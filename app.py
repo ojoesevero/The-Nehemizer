@@ -107,7 +107,7 @@ else:
     if filtrar_pendentes:
         resumo_df_ui = resumo_df_ui[resumo_df_ui['PRECO_COMPRA_FINAL'].isna()]
         if resumo_df_ui.empty:
-            st.success("🎉 Todos os itens possuem preço de compra definido!")
+            st.success("Todos os itens possuem preço de compra definido.")
     
     colunas_bloqueadas = ['CONTRATO_FINAL', 'SIGLA_RESUMO', 'GRUPO_CLIENTE', 'REFPROD', 'DESCRICAO', 'QTDCOM', 'VLR UNIT VENDA', 'VLRTOTAL']
     
@@ -136,13 +136,13 @@ else:
     st.markdown("<br>", unsafe_allow_html=True)
     
     # --- GERAÇÃO DO ARQUIVO CONSOLIDADO ---
-    col_btn, _ = st.columns([2, 3])
+    col_btn, col_status = st.columns([2, 3])
     with col_btn:
         if st.button("GERAR RELATÓRIO FINAL 📥", type="primary", use_container_width=True):
-            with st.spinner("Gerando arquivo Excel estilizado..."):
+            with st.spinner("Consolidando dados e gerando arquivo Excel..."):
                 excel_bytes = gerar_planilha_consolidada(st.session_state['df_processado'])
                 st.session_state['excel_export_bytes'] = excel_bytes
-                st.balloons()
+                st.toast("Relatório consolidado gerado com sucesso!", icon="📊")
 
     if 'excel_export_bytes' in st.session_state and st.session_state['excel_export_bytes'] is not None:
         st.download_button(

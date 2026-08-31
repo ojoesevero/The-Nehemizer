@@ -4,6 +4,14 @@ Todas as alterações notáveis no projeto **The Nehemizer** serão documentadas
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/), e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.2.0] - 2026-08-31
+
+### 🎨 Identidade Visual & Design Corporativo Saavedra
+- **Paleta Oficial Saavedra:** Adoção estrita das cores institucionais Laranja (`#DC4405`), Vermelho (`#DA291C`) e Grafite/Preto (`#25282A`) com fundos suaves neutros (`#F8F9FA`).
+- **Design Sóbrio e Profissional:** Remoção de elementos informais (emojis de instrumentos e balões decorativos) e substituição por confirmações corporativas sutis (`st.toast`).
+- **Tipografia e Estilos CSS Refinados:** Hierarquia visual limpa, cards com bordas suaves e métricas com contraste aprimorado.
+- **Relatório Excel Atualizado:** Cabeçalhos das planilhas exportadas padronizados com as cores oficiais Saavedra.
+
 ---
 
 ## [1.1.0] - 2026-08-31

@@ -1,23 +1,22 @@
 <!-- HEADER DO PROJETO -->
 <div align="center">
 
-  <h1>🎸 The Nehemizer</h1>
+  <h1>The Nehemizer</h1>
   <p><strong>Portal Financeiro & Equalizador de Contratos Hospitalares Saavedra N3</strong></p>
 
   <p>
-    <em>“O peso justo e a organização perfeita para os seus contratos financeiros.”</em><br>
-    <sub>(Inspirado em Provérbios 11:1 e na gestão administrativa de Neemias)</sub>
+    <em>“Equalização, auditoria e consolidação precisa para contratos financeiros e materiais hospitalares.”</em>
   </p>
 
   <p>
     <a href="https://the-nehemizer.streamlit.app/">
-      <img src="https://img.shields.io/badge/🌐_Acesse_em_Produção-the--nehemizer.streamlit.app-F37021?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit App" />
+      <img src="https://img.shields.io/badge/🌐_Acesso_Produção-the--nehemizer.streamlit.app-DC4405?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit App" />
     </a>
   </p>
 
   <p>
     <a href="CHANGELOG.md">
-      <img src="https://img.shields.io/badge/Versão-1.1.0-F37021?style=flat-square&logo=git&logoColor=white" alt="Versão 1.1.0" />
+      <img src="https://img.shields.io/badge/Versão-1.2.0-DC4405?style=flat-square&logo=git&logoColor=white" alt="Versão 1.2.0" />
     </a>
     <img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.11+" />
     <img src="https://img.shields.io/badge/Streamlit-1.30+-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" alt="Streamlit" />
@@ -25,7 +24,7 @@
     <img src="https://img.shields.io/badge/PDFPlumber-0.10+-2D3748?style=flat-square&logo=adobeacrobatreader&logoColor=white" alt="PDFPlumber" />
     <img src="https://img.shields.io/badge/XlsxWriter-3.1+-217346?style=flat-square&logo=microsoftexcel&logoColor=white" alt="XlsxWriter" />
     <img src="https://img.shields.io/badge/Ambiente-Docker_/_DevContainer-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
-    <img src="https://img.shields.io/badge/Licença-Corporativa_Saavedra-F37021?style=flat-square" alt="Licença" />
+    <img src="https://img.shields.io/badge/Licença-Corporativa_Saavedra-25282A?style=flat-square" alt="Licença" />
   </p>
 
 </div>

@@ -1,15 +1,18 @@
-"""Configurações centrais, mapeamentos de contratos e constantes visuais da Saavedra."""
+"""Configurações centrais, mapeamentos de contratos e identidade visual oficial da Saavedra."""
 
 APP_TITLE = "The Nehemizer - Portal Financeiro Saavedra"
-APP_SUBTITLE = "O peso justo e a organização perfeita para os seus contratos financeiros. (Inspirado em Provérbios 11:1 e Neemias)"
-APP_VERSION = "1.1.0"
-APP_ICON = "🎸"
+APP_SUBTITLE = "Equalização, auditoria e consolidação precisa para contratos financeiros e materiais hospitalares."
+APP_VERSION = "1.2.0"
+APP_ICON = "📊"
 
-# Paleta Corporativa Saavedra
-PRIMARY_COLOR = "#F37021"      # Laranja Saavedra
-SECONDARY_COLOR = "#333333"    # Grafite Escuro
-BG_CARD_COLOR = "#F8FAFC"      # Fundo suave
-TEXT_MUTED = "#475569"         # Texto secundário
+# Paleta Corporativa Oficial Saavedra
+PRIMARY_COLOR = "#DC4405"       # Laranja Oficial Saavedra
+ACCENT_COLOR = "#DA291C"        # Vermelho Oficial Saavedra
+DARK_NEUTRAL = "#25282A"        # Grafite Escuro Oficial Saavedra
+BG_CARD_COLOR = "#F8F9FA"       # Fundo neutro suave
+BORDER_COLOR = "#E9ECEF"        # Borda sutil
+TEXT_MUTED = "#6C757D"          # Texto de apoio
+SECONDARY_COLOR = DARK_NEUTRAL
 
 # Mapeamento Oficial de Contratos BD
 CONTRATOS_MAPPING = {
@@ -24,42 +27,51 @@ CONTRATOS_MAPPING = {
     'CONCEICAO': '450166419'
 }
 
-# CSS Customizado Corporativo
+# CSS Customizado Corporativo Refinado
 CUSTOM_CSS = f"""
     <style>
         .main-title {{
             color: {PRIMARY_COLOR};
-            font-size: 2.2rem;
-            font-weight: 800;
+            font-size: 2.0rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
             margin-bottom: 0px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }}
         .sub-title {{
             color: {TEXT_MUTED};
-            font-size: 1.05rem;
-            font-style: italic;
+            font-size: 0.95rem;
+            font-weight: 400;
             margin-bottom: 1.5rem;
+            margin-top: 4px;
         }}
         .metric-card {{
             background-color: {BG_CARD_COLOR};
-            border-left: 5px solid {PRIMARY_COLOR};
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid {BORDER_COLOR};
+            border-left: 4px solid {PRIMARY_COLOR};
+            padding: 1.2rem;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }}
         .badge-version {{
-            background-color: {PRIMARY_COLOR};
-            color: white;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-left: 10px;
-            vertical-align: middle;
+            background-color: {DARK_NEUTRAL};
+            color: #FFFFFF;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }}
         .stButton>button {{
-            border-radius: 6px;
-            font-weight: bold;
+            border-radius: 4px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }}
+        div[data-testid="stMetricValue"] {{
+            color: {DARK_NEUTRAL};
+            font-weight: 700;
         }}
     </style>
 """
