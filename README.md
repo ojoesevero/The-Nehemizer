@@ -16,6 +16,9 @@
   </p>
 
   <p>
+    <a href="CHANGELOG.md">
+      <img src="https://img.shields.io/badge/Versão-1.1.0-F37021?style=flat-square&logo=git&logoColor=white" alt="Versão 1.1.0" />
+    </a>
     <img src="https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.11+" />
     <img src="https://img.shields.io/badge/Streamlit-1.30+-FF4B4B?style=flat-square&logo=streamlit&logoColor=white" alt="Streamlit" />
     <img src="https://img.shields.io/badge/Pandas-2.0+-150458?style=flat-square&logo=pandas&logoColor=white" alt="Pandas" />
@@ -285,20 +288,30 @@ Este repositório está pré-configurado com **DevContainers**:
 
 ---
 
-## 📂 Estrutura do Repositório
+## 📂 Estrutura do Repositório (Arquitetura Modular)
 
 ```text
 The-Nehemizer/
 │
-├── .devcontainer/
-│   └── devcontainer.json    # Configuração de ambiente conteinerizado
-├── .vscode/
-│   └── settings.json        # Preferências e workspace settings
-├── .gitignore               # Regras de exclusão do controle de versão
-├── app.py                   # Núcleo da aplicação (Streamlit + Regras de Negócio)
-├── CONFLUENCE.md            # Documentação técnica e operacional para Confluence
-├── README.md                # Guia do projeto e documentação para desenvolvedores
-└── requirements.txt         # Especificação de dependências Python
+├── app.py                   # Ponto de entrada do Streamlit (UI & Orquestrador)
+├── CHANGELOG.md             # Histórico de versões e notas de lançamento (SemVer)
+├── README.md                # Guia do projeto e documentação técnica
+├── CONFLUENCE.md            # Documentação técnica corporativa para Confluence
+├── requirements.txt         # Especificação de dependências Python
+│
+├── src/                     # Pacote de código-fonte modular
+│   ├── config/              # Configurações globais e mapeamento de contratos
+│   │   └── settings.py
+│   ├── services/            # Serviços especializados de processamento
+│   │   ├── business_rules.py# Regra Suprema de Contingência e consolidação
+│   │   ├── excel_exporter.py# Geração multi-abas com formatação XlsxWriter
+│   │   ├── pdf_service.py   # Parser de contratos PDF com Regex e Caching
+│   │   └── table_service.py # Leitura resiliente de tabelas e gerador de templates
+│   └── utils/               # Componentes visuais e painéis
+│       └── ui_components.py # KPIs, gráficos, guias interativos e cabeçalho
+│
+├── .devcontainer/           # Configuração de ambiente conteinerizado Docker
+└── .vscode/                 # Preferências do workspace VS Code
 ```
 
 <br />
